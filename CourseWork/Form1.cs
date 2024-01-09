@@ -101,37 +101,33 @@ namespace CourseWork
         {
             if (radioButton1.Checked)
             {
-                // Показати dateTimePicker1 і dateTimePicker2
                 dateTimePicker1.Visible = true;
                 dateTimePicker2.Visible = true;
 
                 label3.Visible = true;
                 label2.Visible = true;
-                // Приховати comboBox1
                 comboBox1.Visible = false;
             }
             else if (radioButton2.Checked)
             {
-                // Приховати dateTimePicker1 і dateTimePicker2
                 dateTimePicker1.Visible = true;
                 dateTimePicker2.Visible = false;
 
                 label2.Visible = true;
                 label8.Visible = true;
 
-                // Показати comboBox1
                 comboBox1.Visible = true;
             }
 
             button2.Visible = radioButton1.Checked || radioButton2.Checked;
         }
 
+
         private void button2_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(selectedEmployeeName))
                 return;
 
-            // Очистіть попередні результати
             textBox3.Text = "";
             textBox4.Text = "";
 
@@ -141,26 +137,23 @@ namespace CourseWork
 
             if (radioButton2.Checked && comboBox1.SelectedItem is int selectedDays)
             {
-                // Обчислення для radioButton2 (декретні)
+               
                 daysDifference = selectedDays;
                 totalSickDays = selectedDays;
             }
             else if (!string.IsNullOrWhiteSpace(textBox4.Text) && int.TryParse(textBox4.Text, out int manualDays))
             {
-                // Перевірка, чи введена кількість днів більше або рівною нулю
                 if (manualDays <= 0)
                 {
                     MessageBox.Show("Кількість днів повинна бути більше або рівною нулю.");
-                    return; // Завершити виконання методу, якщо є помилка
+                    return; 
                 }
 
-                // Обчислення для radioButton1 (лікарняні) або введено вручну
                 daysDifference = manualDays;
                 totalSickDays = manualDays;
             }
             else
             {
-                // Додана умова для перевірки дат
                 if (dateTimePicker1.Value > dateTimePicker2.Value)
                 {
                     MessageBox.Show("Дата початку не може бути пізнішою, ніж дата кінця, або співпадати з нею.");
@@ -168,14 +161,12 @@ namespace CourseWork
                     return;
                 }
 
-                // Обчислення для radioButton1 (лікарняні) з dateTimePicker1 і dateTimePicker2
                 daysDifference = (int)(dateTimePicker2.Value - dateTimePicker1.Value).TotalDays;
 
-                // Перевірка, чи введена кількість днів більше або рівною нулю
                 if (daysDifference <= 0)
                 {
                     MessageBox.Show("Кількість днів повинна бути більше або рівною нулю.");
-                    return; // Завершити виконання методу, якщо є помилка
+                    return;
                 }
 
                 totalSickDays = daysDifference;
@@ -206,7 +197,6 @@ namespace CourseWork
         {
             int yearsOfWork = (int)Math.Round((DateTime.Now - startDate).TotalDays / 365);
 
-            // Визначити відсоток знижки в залежності від стажу
             if (yearsOfWork < 3)
                 return 0.50;
             else if (yearsOfWork < 5)
@@ -230,13 +220,8 @@ namespace CourseWork
 
         private double CalculateSicknessAllowance(double averageDailySalary, int totalSickDays, double discountPercentage)
         {
-            // Розрахунок денної виплати
             double dailySalary = averageDailySalary * totalSickDays * discountPercentage;
 
-            // Розрахунок відшкодування від роботодавця
-            /*            double employerCoverage = dailySalary * totalSickDays;*/
-
-            // Округлення результату
             return Math.Round(dailySalary, 2);
         }
 
