@@ -252,5 +252,5 @@ namespace CourseWork
         {
             listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
         }
-    }
+    }//
 }
